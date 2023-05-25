@@ -10,9 +10,9 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/Favorite.vue')
+      path: '/favorites',
+      name: 'favorites',
+      component: () => import('../views/Favorites.vue')
     }
   ]
 })
