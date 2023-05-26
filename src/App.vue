@@ -27,4 +27,11 @@ main {
   max-width: 1800px;
   padding: 50px;
 }
+
+@media (max-width: 570px) {
+  main {
+    padding: 20px;
+}
+}
+
 </style>
