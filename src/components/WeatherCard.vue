@@ -2,8 +2,8 @@
   import { computed } from 'vue';
   import { useStore } from 'vuex'
   import { formatDate } from '@/services/helpers';
-  import Card from '@/components/Card.vue'
-  import Chart from '@/components/Chart.vue'
+  import CardApp from '@/components/CardApp.vue'
+  import ChartApp from '@/components/ChartApp.vue'
 
   const store = useStore()
 
@@ -22,8 +22,8 @@ const chartData = computed(() => {
 
 <template>
   <div v-if="chartData" class="wrapp">
-    <Card/>
-    <Chart :key="chartData.lenght" :data="chartData"/>
+    <CardApp/>
+    <ChartApp :key="chartData.lenght" :data="chartData"/>
   </div> 
 </template>
 

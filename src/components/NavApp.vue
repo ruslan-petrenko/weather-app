@@ -2,7 +2,7 @@
 import { RouterLink } from 'vue-router';
 import { ref, watchEffect } from 'vue';
 import { useStore } from 'vuex';
-import Autocompleate from '@/components/Autocompleate.vue';
+import AutocompleateApp from '@/components/AutocompleateApp.vue';
 
 const store = useStore();
 const search = ref('Truskavets');
@@ -26,7 +26,7 @@ function handleInput(value: string) {
     <div class="nav-content">
       <div class="finder-wrapp">
         <a href="/"><img src="./icons/Logo.png" alt="Logo"/></a>
-        <Autocompleate :value="search" :data="store.state.cityesData" searchByProp="city" @input="handleInput" placeholder="Find city"/>
+        <AutocompleateApp :value="search" :data="store.state.cityesData" searchByProp="city" @input="handleInput" placeholder="Find city"/>
       </div>
       
       <div class="links">

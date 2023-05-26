@@ -29,14 +29,12 @@ function changeHeart() {
 const weatherList = computed(() => {
   if (store.state.selectedTimeRange === 'today' ) {
     const endOfTheDayIndex = weatherData.value?.list?.findIndex((el: any) => formatDate(el.dt_txt) === '12 AM')
-    return weatherData.value.list?.filter((el, i) => i <= endOfTheDayIndex)
+    return weatherData.value.list?.filter((el: any, i: number) => i <= endOfTheDayIndex)
   }
 
   if (store.state.selectedTimeRange === 'tomorrow' ) {
     return []
   }
-  console.log(weatherData.value.list)
-  // weatherData.value.list.filter((item: any) => console.log(item))
   return weatherData.value.list
 })
 
@@ -61,8 +59,6 @@ function getWeatherIcon(item: any) {
 
   return 'cloud'
 }
-
-// console.log(getWeatherIcon())
 </script>
 
 <template>

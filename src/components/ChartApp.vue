@@ -32,7 +32,7 @@ watchEffect(() => {
 
 onMounted(() => {
   chart = new Chart(
-    document.querySelector('.chart'),
+    document.querySelector('.chart') as any,
     {
       type: 'line',
       data: {

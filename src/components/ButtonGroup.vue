@@ -3,8 +3,8 @@
 const props = defineProps<{
   options: { type: any },
   selectedOption: {
-    type: any
-    
+    value: string,
+    label: string  
   }  
 }>()
 
