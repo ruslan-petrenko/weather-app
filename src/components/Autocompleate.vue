@@ -13,7 +13,8 @@ const emit = defineEmits(['input'])
 
 let hideAutocomplete = ref(false);
 const filteredData = computed(() => props.data.filter(el => el[props.searchByProp].toLowerCase().startsWith(props.value.toLowerCase())))
-const isShowAutocomplete  = computed(() => filteredData.value.length > 0 && props.value && !hideAutocomplete.value )
+const isShowAutocomplete  = computed(() => filteredData.value.length > 0 && props.value && !hideAutocomplete.value 
+&& props.value !== filteredData.value[0][props.searchByProp])
 
 function autocomplete(el: any) {
   emit('input', el[props.searchByProp])
@@ -104,7 +105,7 @@ input::placeholder {
 }
 
 .option:hover {
-  background: ;
+  background: var(--purple-700);
   cursor: pointer;
 }
 

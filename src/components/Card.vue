@@ -15,7 +15,6 @@ const whetherRangeList: any = [
 // const data: any = reactive({ selectedOption: { value: 'today', label: 'Today' }});
 
 let isFavorite = ref(true);
-
 const weatherData = computed(() => store.state.weatherData)
 
 function handleSelectTimeRange(timeRenge: object) {
@@ -36,12 +35,34 @@ const weatherList = computed(() => {
   if (store.state.selectedTimeRange === 'tomorrow' ) {
     return []
   }
-
+  console.log(weatherData.value.list)
   // weatherData.value.list.filter((item: any) => console.log(item))
   return weatherData.value.list
 })
 
+function getWeatherIcon(item: any) {
+  const percentOfClouds = item.clouds.all;
+  const weatherType = item.weather[0].main;
+  if (weatherType === 'Rain') {
+    if (percentOfClouds <= 70) {
+      return 'cloud-sun-rain'
+    } 
 
+    return 'cloud-rain'
+  } 
+
+  if (weatherType === 'Clear') {
+    return 'sun'
+  }
+
+  if (percentOfClouds <= 70) {
+    return 'cloud-sun'
+  }
+
+  return 'cloud'
+}
+
+// console.log(getWeatherIcon())
 </script>
 
 <template>
@@ -50,7 +71,7 @@ const weatherList = computed(() => {
       <div>
         <ButtonGroup :options="whetherRangeList" :selectedOption="store.state.selectedTimeRange" @select="handleSelectTimeRange" />
       </div>
-      <font-awesome-icon class="icon" :icon="[isFavorite ? 'far' : 'fas', 'heart']" @click="changeHeart"/>
+      <font-awesome-icon class="heart" :icon="[isFavorite ? 'far' : 'fas', 'heart']" @click="changeHeart"/>
     </div>
     <div>
       <p class="city">{{ weatherData.city?.name }}</p>
@@ -58,9 +79,12 @@ const weatherList = computed(() => {
     <div class="card-wrapp">
       <div v-for="(item, index) of weatherList" :key="index">
         <div class="card">
-          <p class="item time">{{ formatDate(item.dt_txt) }}</p>
-          <p class="item">Temp: {{(item.main.temp).toFixed(1)}} &#8451;</p>
-          <p class="item">Feel like: {{(item.main.feels_like).toFixed(1)}} &#8451;</p>
+          <p class="time">{{ formatDate(item.dt_txt) }}</p>
+          <div class="items-wrapp">
+            <font-awesome-icon class="weather-icon" :icon="['fas', getWeatherIcon(item)]" />
+            <p class="item">Temp: <span class="temp">{{(item.main.temp).toFixed(1)}} &#8451;</span></p>
+            <p class="item">Feel like: <span class="temp">{{(item.main.feels_like).toFixed(1)}} &#8451;</span></p>
+          </div>
         </div>
       </div>
     </div>
@@ -92,14 +116,14 @@ const weatherList = computed(() => {
 
 .card {
     width: 170px;
-    height: 190px;
     padding: 10px;
-    box-shadow: 0px 24px 38px rgba(0, 0, 0, 0.11), 0px 9px 46px rgba(0, 0, 0, 0.09), 0px 11px 15px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 4px #0000001f, 0 3px 6px #00000026, 0 0 4px #00000026;
     border-radius: 10px;
-    margin-right: 10px;
+    margin-right: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    align-items: center;
+    justify-content: space-between;
     font-family: 'Inter', sans-serif;
     font-size: 20px;
     background-color: white;
@@ -107,22 +131,40 @@ const weatherList = computed(() => {
 .city {
     font-family: 'Inter', sans-serif;
     font-size: 45px;
-    color: var(--text-color);
+    color: var(--black-800);
     padding: 30px 27px;
 }
 
-.item {
-  color: var(--text-color);
-}
-.item:last-child {
-  border: none
-}
-
 .time {
+  margin-bottom: 15px;
+  color: var(--black-800);
   text-align: center;
 }
+.items-wrapp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.weather-icon {
+  margin-bottom: 15px;
+  font-size: 50px;
+  color: var(--purple-500);
+}
+.item {
+    padding: 6px 0;
+    color: var(--black-800);
+    font-size: 14px;
+}
+.item:first-child .item:last-child {
+  padding: 0;
+}
 
-.icon {
+.temp {
+  font-weight: 300;
+}
+
+
+.heart {
   font-size: 25px;
   padding: 14px;
   cursor: pointer;

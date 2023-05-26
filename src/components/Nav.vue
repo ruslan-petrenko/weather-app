@@ -5,7 +5,7 @@ import { useStore } from 'vuex';
 import Autocompleate from '@/components/Autocompleate.vue';
 
 const store = useStore();
-const search = ref('Lviv');
+const search = ref('Truskavets');
 
 watchEffect(async () => {
   const city = store.state.cityesData.find((el: any) => el.city === search.value)
@@ -25,7 +25,7 @@ function handleInput(value: string) {
   <nav>
     <div class="nav-content">
       <div class="finder-wrapp">
-        <img src="./icons/Logo.png" alt="Logo">
+        <a href="/"><img src="./icons/Logo.png" alt="Logo"/></a>
         <Autocompleate :value="search" :data="store.state.cityesData" searchByProp="city" @input="handleInput" placeholder="Find city"/>
       </div>
       
@@ -62,6 +62,7 @@ nav {
 }
 
 img {
+  width: 80px;
   margin-right: 32px;
 }
 
@@ -93,6 +94,6 @@ img {
 }
 
 .router-link-active {
-  background: white;
+  background: var(--purple-700);
 }
 </style>

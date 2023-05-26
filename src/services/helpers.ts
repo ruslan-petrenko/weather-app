@@ -4,6 +4,6 @@ export function formatDate(date: Date) {
   const ampm = hours >= 12 ? 'pm' : 'am';
   hours = hours % 12;
   hours = hours ? hours : 12;
-  return hours + ' ' + ampm.toUpperCase()
+  return hours + ' ' + ampm;
 }
 

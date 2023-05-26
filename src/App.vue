@@ -15,8 +15,8 @@ import Nav from './components/Nav.vue'
 
 <style scoped>
 main {
-  margin: 0 auto;
-  max-width: 1800px;
-  padding: 100px
+    margin: 0 auto;
+    max-width: 1500px;
+    padding: 50px;
 }
 </style>

@@ -16,11 +16,13 @@ watchEffect(() => {
         datasets: [
           {
             label: 'Max temperature',
-            data: props.data.map(row => row.tempMax)
+            data: props.data.map(row => row.tempMax),
+            borderColor: 'rgba(193, 55, 162, 1)',
           },
           {
             label: 'Min temperature',
-            data: props.data.map(row => row.tempMin)
+            data: props.data.map(row => row.tempMin),
+            borderColor: '#8660ae',
           }
         ]
       }
@@ -38,11 +40,13 @@ onMounted(() => {
         datasets: [
           {
             label: 'Max temperature',
-            data: props.data.map(row => row.tempMax)
+            data: props.data.map(row => row.tempMax),
+            borderColor: 'rgba(193, 55, 162, 1)',
           },
           {
             label: 'Min temperature',
-            data: props.data.map(row => row.tempMin)
+            data: props.data.map(row => row.tempMin),
+            borderColor: '#8660ae',
           }
         ]
       }
