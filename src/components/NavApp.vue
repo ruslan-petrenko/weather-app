@@ -104,7 +104,6 @@ img {
 
 .link {
   display: inline-block;
-  font-family: 'Inter', 'sans-serif';
   font-size: 20px;
   font-weight: 400;
   color: var(--text-color);
@@ -133,7 +132,7 @@ img {
 .burger-btn {
   width: 20px;
   z-index: 1;
-  background: #000;
+  background: var(--text-color);
   transition: all 0.5s ease-in-out;
   height: 2px;
 }
@@ -143,7 +142,7 @@ img {
   position: absolute;
   width: 20px;
   height: 2px;
-  background: #000;
+  background: var(--text-color);
   content: "";
   transition: all 0.5s ease-in-out;
 }

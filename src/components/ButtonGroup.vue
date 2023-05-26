@@ -22,7 +22,6 @@ const emit = defineEmits(['select'])
 
 button {
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
   font-size: 20px;
   font-weight: 400;
   color: var(--text-color);
@@ -36,15 +35,15 @@ button {
 
 @media (max-width: 570px) {
   button {
-    font-size: 15px;
+    font-size: 20px;
     padding: 10px 10px;
 }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 430px) {
   button {
-    font-size: 15px;
-    padding: 10px 5px;
+    font-size: 17px;
+    padding: 10px 10px;
 }
 
 }

@@ -76,7 +76,6 @@ input {
 }
 
 input::placeholder {
-  font-family: 'Inter', sans-serif;
   font-size: 20px;
   font-weight: 400;
   color: var(--text-color);
@@ -88,7 +87,6 @@ input::placeholder {
   left: 0;
   right: 0;
   z-index: 1;
-  font-family: 'Inter', sans-serif;
   font-size: 20px;
   font-weight: 400;
   border-radius: 10px;

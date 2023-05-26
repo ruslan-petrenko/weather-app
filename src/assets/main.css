@@ -30,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	height: 100%;
+	font-family: 'Inter', sans-serif;
 	line-height: 1;
 	background: white;
 }

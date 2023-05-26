@@ -39,7 +39,6 @@ const props = defineProps<{
 
 .link {
   display: inline-block;
-  font-family: 'Inter', 'sans-serif';
   font-size: 20px;
   font-weight: 400;
   color: var(--text-color);

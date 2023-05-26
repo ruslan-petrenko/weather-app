@@ -120,12 +120,10 @@ function getWeatherIcon(item: any) {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  font-family: 'Inter', sans-serif;
   font-size: 20px;
   background-color: white;
 }
 .city {
-  font-family: 'Inter', sans-serif;
   font-size: 45px;
   color: var(--black-800);
   padding: 30px 27px;
