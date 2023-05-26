@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const props = defineProps<{
   options: { type: any },
   selectedOption: {
@@ -9,7 +8,6 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits(['select'])
-
 </script>
 
 <template>
@@ -21,6 +19,7 @@ const emit = defineEmits(['select'])
 .active {
   background: var(--purple-700);
 }
+
 button {
   cursor: pointer;
   font-family: 'Inter', sans-serif;
@@ -32,6 +31,19 @@ button {
   border: none;
   border-left: 1px solid var(--purple-700);
   border-right: 1px solid var(--purple-700);
+
+}
+
+@media (max-width: 570px) {
+  button {
+    padding: 10px 15px;
+}
+}
+
+@media (max-width: 400px) {
+  button {
+    padding: 10px 10px;
+}
 
 }
 button:first-child {

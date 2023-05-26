@@ -7,8 +7,3 @@ import WeatherCard from '@/components/WeatherCard.vue';
     <WeatherCard />
   </div>
 </template>
-
-
-<style scoped>
-  
-</style>

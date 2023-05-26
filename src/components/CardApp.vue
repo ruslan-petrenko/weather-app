@@ -19,7 +19,7 @@ const weatherData = computed(() => store.state.weatherData)
 
 function handleSelectTimeRange(timeRenge: object) {
   store.commit('setTimeRange', timeRenge)
-    store.dispatch('getTodayWeatherData', store.getters.currentTimeStemp)
+  store.dispatch('getTodayWeatherData', store.getters.currentTimeStemp)
 }
 
 function changeHeart() {
@@ -45,7 +45,7 @@ function getWeatherIcon(item: any) {
     if (percentOfClouds <= 70) {
       return 'cloud-sun-rain'
     } 
-
+    
     return 'cloud-rain'
   } 
 
@@ -111,24 +111,30 @@ function getWeatherIcon(item: any) {
 }
 
 .card {
-    width: 170px;
-    padding: 10px;
-    box-shadow: 0 2px 4px #0000001f, 0 3px 6px #00000026, 0 0 4px #00000026;
-    border-radius: 10px;
-    margin-right: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    font-family: 'Inter', sans-serif;
-    font-size: 20px;
-    background-color: white;
+  width: 170px;
+  padding: 10px;
+  box-shadow: 0 2px 4px #0000001f, 0 3px 6px #00000026, 0 0 4px #00000026;
+  border-radius: 10px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  background-color: white;
 }
 .city {
-    font-family: 'Inter', sans-serif;
-    font-size: 45px;
-    color: var(--black-800);
-    padding: 30px 27px;
+  font-family: 'Inter', sans-serif;
+  font-size: 45px;
+  color: var(--black-800);
+  padding: 30px 27px;
+}
+
+@media (max-width: 570px) {
+  .city {
+    font-size: 30px;
+}
 }
 
 .time {
@@ -147,9 +153,9 @@ function getWeatherIcon(item: any) {
   color: var(--purple-500);
 }
 .item {
-    padding: 6px 0;
-    color: var(--black-800);
-    font-size: 14px;
+  padding: 6px 0;
+  color: var(--black-800);
+  font-size: 14px;
 }
 .item:first-child .item:last-child {
   padding: 0;
@@ -168,7 +174,7 @@ function getWeatherIcon(item: any) {
 }
 
 .location {
-    font-size: 47px;
-    color: var(--text-color);
+  font-size: 47px;
+  color: var(--text-color);
 }
 </style>

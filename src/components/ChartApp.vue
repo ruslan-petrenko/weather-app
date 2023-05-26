@@ -9,7 +9,6 @@ const props = defineProps<{
 let chart: any = null
 
 watchEffect(() => {
-
   if(props.data.length && chart) {
     chart.data = {
         labels: props.data.map(row => row.time),
@@ -59,8 +58,8 @@ onMounted(() => {
 <template>
   <div  class="chart-wrapp">
     <div>
-    <canvas class="chart"></canvas>
-  </div>
+      <canvas class="chart"></canvas>
+    </div>
   </div>
   
 </template>

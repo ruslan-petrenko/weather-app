@@ -12,6 +12,7 @@ const props = defineProps<{
 const emit = defineEmits(['input'])
 
 let hideAutocomplete = ref(false);
+
 const filteredData = computed(() => props.data.filter(el => el[props.searchByProp].toLowerCase().startsWith(props.value.toLowerCase())))
 const isShowAutocomplete  = computed(() => filteredData.value.length > 0 && props.value && !hideAutocomplete.value 
 && props.value !== filteredData.value[0][props.searchByProp])
@@ -54,11 +55,11 @@ function onInput(e: any) {
 .input-wrapp {
   display: flex;
   align-items: center;
-    max-width: 100%;
-    padding: 8px 15px;
-    color: var(--text-color);
-    background: var(--purple-700);
-    border-radius: 10px;
+  max-width: 100%;
+  padding: 8px 15px;
+  color: var(--text-color);
+  background: var(--purple-700);
+  border-radius: 10px;
 }
 
 .icon {
@@ -81,18 +82,18 @@ input::placeholder {
   color: var(--text-color);
 }
 .options-list {
-    position: absolute;
-    max-height: 200px;
-    overflow: scroll;
-    left: 0;
-    right: 0;
-    z-index: 1;
-    font-family: 'Inter', sans-serif;
-    font-size: 20px;
-    font-weight: 400;
-    border-radius: 10px;
-    box-shadow: 0px 0px 6px 0px rgb(0 0 0 / 31%);
-    background: white;
+  position: absolute;
+  max-height: 200px;
+  overflow: scroll;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px 0px rgb(0 0 0 / 31%);
+  background: white;
 }
 
 .option {

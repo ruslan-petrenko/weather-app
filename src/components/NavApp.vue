@@ -3,9 +3,15 @@ import { RouterLink } from 'vue-router';
 import { ref, watchEffect } from 'vue';
 import { useStore } from 'vuex';
 import AutocompleateApp from '@/components/AutocompleateApp.vue';
+const props = defineProps<{
+  showSideBar: boolean
+}>()
+
+const emit = defineEmits(['toggleSideBar'])
 
 const store = useStore();
 const search = ref('Truskavets');
+
 
 watchEffect(async () => {
   const city = store.state.cityesData.find((el: any) => el.city === search.value)
@@ -18,7 +24,6 @@ watchEffect(async () => {
 function handleInput(value: string) {
   search.value = value;
 }
-
 </script>
 
 <template>
@@ -26,13 +31,24 @@ function handleInput(value: string) {
     <div class="nav-content">
       <div class="finder-wrapp">
         <a href="/"><img src="./icons/Logo.png" alt="Logo"/></a>
-        <AutocompleateApp :value="search" :data="store.state.cityesData" searchByProp="city" @input="handleInput" placeholder="Find city"/>
+        <AutocompleateApp 
+        :value="search" 
+        :data="store.state.cityesData" searchByProp="city" @input="handleInput" placeholder="Find city"/>
       </div>
       
       <div class="links">
         <RouterLink class="link" to="/">Home</RouterLink>
         <RouterLink class="link" to="/favorites">Favorites</RouterLink>
       </div>
+      <div
+          class="burger-btn-wrapp"
+          @click="emit('toggleSideBar')"
+        >
+          <div
+            class="burger-btn"
+            :class="props.showSideBar ? 'open' : ''"
+          />
+        </div>
     </div>
   </nav>
 </template>
@@ -46,12 +62,22 @@ nav {
   box-shadow: 0px 12px 20px -13px rgba(0,0,0,0.75);
 }
 
+@media (max-width: 850px) {
+  nav {
+    padding: 0 50px;
+  }
+}
+
+@media (max-width: 710px) {
+  nav {
+    padding: 0 30px;
+  }
+}
+
 .nav-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1800px;
-
 }
 
 .finder-wrapp {
@@ -66,21 +92,14 @@ img {
   margin-right: 32px;
 }
 
-
-@media (max-width: 800px) {
-  nav {
-    padding: 0 50px;
-  }
-}
-
-@media (max-width: 570px) {
-  nav {
-    padding: 0 30px;
-  }
-}
-
 .links {
   display: flex;
+}
+
+@media (max-width: 720px) {
+  .links {
+    display: none;
+  }
 }
 
 .link {
@@ -95,5 +114,56 @@ img {
 
 .router-link-active {
   background: var(--purple-700);
+}
+
+.burger-btn-wrapp {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 25px;
+  height: 20px;
+}
+
+@media (min-width: 721px) {
+  .burger-btn-wrapp {
+    display:  none;
+  }
+}
+
+.burger-btn {
+  width: 20px;
+  z-index: 1;
+  background: #000;
+  transition: all 0.5s ease-in-out;
+  height: 2px;
+}
+
+.burger-btn::before,
+.burger-btn::after {
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background: #000;
+  content: "";
+  transition: all 0.5s ease-in-out;
+}
+.burger-btn::before {
+  transform: translateY(-6px);
+}
+.burger-btn::after {
+  transform: translateY(6px);
+}
+
+/*ANIMATION*/
+.burger-btn.open {
+  transform: translateX(-50px);
+  box-shadow: none;
+  background: transparent
+}
+.burger-btn.open::before {
+  transform: rotate(45deg) translate(35px, -35px);
+}
+.burger-btn.open::after {
+  transform: rotate(-45deg) translate(35px, 35px);
 }
 </style>

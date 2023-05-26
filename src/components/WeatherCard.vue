@@ -5,15 +5,14 @@
   import CardApp from '@/components/CardApp.vue'
   import ChartApp from '@/components/ChartApp.vue'
 
-  const store = useStore()
+const store = useStore()
 
 const chartData = computed(() => {
   return store.state.weatherData.list?.map((el: any) => {
     return {
-        time: formatDate(el.dt_txt),
-        tempMax: el.main.temp_max.toFixed(1),
-        tempMin: el.main.temp_min.toFixed(1)
-
+      time: formatDate(el.dt_txt),
+      tempMax: el.main.temp_max.toFixed(1),
+      tempMin: el.main.temp_min.toFixed(1)
       } 
   })
 })
@@ -29,9 +28,9 @@ const chartData = computed(() => {
 
 <style scoped>
 .wrapp {
-    display: flex;
-    flex-flow: column;
-    height: 100%;
-  }
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
 
 </style>
