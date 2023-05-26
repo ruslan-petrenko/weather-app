@@ -128,11 +128,22 @@ function getWeatherIcon(item: any) {
   color: var(--black-800);
   padding: 30px 27px;
 }
+.heart {
+  font-size: 25px;
+  padding: 14px;
+  cursor: pointer;
+  color: var(--text-color);
+}
 
 @media (max-width: 570px) {
   .city {
     font-size: 30px;
 }
+
+  .heart {
+    font-size: 20px;
+    padding: 12px;
+  }
 }
 
 .time {
@@ -161,14 +172,6 @@ function getWeatherIcon(item: any) {
 
 .temp {
   font-weight: 300;
-}
-
-
-.heart {
-  font-size: 25px;
-  padding: 14px;
-  cursor: pointer;
-  color: var(--text-color);
 }
 
 .location {
