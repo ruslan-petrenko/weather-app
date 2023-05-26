@@ -36,13 +36,15 @@ button {
 
 @media (max-width: 570px) {
   button {
-    padding: 10px 15px;
+    font-size: 15px;
+    padding: 10px 10px;
 }
 }
 
 @media (max-width: 400px) {
   button {
-    padding: 10px 10px;
+    font-size: 15px;
+    padding: 10px 5px;
 }
 
 }
