@@ -135,15 +135,17 @@ img {
   background: var(--text-color);
   transition: all 0.5s ease-in-out;
   height: 2px;
+  border-radius: 10px;
 }
 
 .burger-btn::before,
 .burger-btn::after {
   position: absolute;
+  content: "";
   width: 20px;
   height: 2px;
   background: var(--text-color);
-  content: "";
+  border-radius: 10px;
   transition: all 0.5s ease-in-out;
 }
 .burger-btn::before {
