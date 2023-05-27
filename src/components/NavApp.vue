@@ -5,7 +5,7 @@ import { useStore } from 'vuex';
 import AutocompleateApp from '@/components/AutocompleateApp.vue';
 const props = defineProps<{
   showSideBar: boolean,
-  routers: [{path: string, name: string}]
+  routers: {path: string, name: string}[]
 }>()
 
 const emit = defineEmits(['toggleSideBar'])

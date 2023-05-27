@@ -2,7 +2,7 @@
 import { RouterLink } from 'vue-router';
 const props = defineProps<{
   open: boolean,
-  routers: [{path: string, name: string}]
+  routers: {path: string, name: string}[]
 }>()
 
 const emit = defineEmits(['hideSidebar'])
