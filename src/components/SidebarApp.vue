@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 const props = defineProps<{
-  open: boolean
+  open: boolean,
+  routers: [{path: string, name: string}]
 }>()
+
+const emit = defineEmits(['hideSidebar'])
 
 </script>
 
 <template>
   <div class="sidebar" :class="props.open ? 'open' : ''" >
-    <div class="links">
-        <RouterLink class="link" to="/">Home</RouterLink>
-        <RouterLink class="link" to="/favorites">Favorites</RouterLink>
+    <div class="links" v-for="(router, index) of props.routers" :key="index" :to="router.path">
+        <RouterLink class="link" :to="router.path" @click="emit('hideSidebar')">{{ router.name }}</RouterLink>
       </div>
   </div>
   

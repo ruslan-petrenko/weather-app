@@ -12,7 +12,6 @@ const whetherRangeList: any = [
   { value: 'tomorrow', label: 'Tomorrow' }, 
   { value: 'fiveDays', label: '5 Days' }
 ]
-// const data: any = reactive({ selectedOption: { value: 'today', label: 'Today' }});
 
 let isFavorite = ref(true);
 const weatherData = computed(() => store.state.weatherData)
@@ -65,7 +64,10 @@ function getWeatherIcon(item: any) {
   <div class="weather-wrapp">
     <div class="button-wrapp">
       <div>
-        <ButtonGroup :options="whetherRangeList" :selectedOption="store.state.selectedTimeRange" @select="handleSelectTimeRange" />
+        <ButtonGroup 
+        :options="whetherRangeList" 
+        :selectedOption="store.state.selectedTimeRange" 
+        @select="handleSelectTimeRange"/>
       </div>
       <font-awesome-icon class="heart" :icon="[isFavorite ? 'far' : 'fas', 'heart']" @click="changeHeart"/>
     </div>
@@ -94,7 +96,9 @@ function getWeatherIcon(item: any) {
   justify-content: space-between;
   margin-bottom: 30px;
   background: #FFFFFF;
-  box-shadow: 0px 24px 38px rgba(0, 0, 0, 0.11), 0px 9px 46px rgba(0, 0, 0, 0.09), 0px 11px 15px rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 24px 38px rgba(0, 0, 0, 0.11), 
+  0px 9px 46px rgba(0, 0, 0, 0.09), 
+  0px 11px 15px rgba(0, 0, 0, 0.16);
   border-radius: 16px;
 }
 
@@ -107,7 +111,6 @@ function getWeatherIcon(item: any) {
   display: flex;
   overflow-x: scroll;
   padding: 20px;
-/* margin-right: 10px; */
 }
 
 .card {
@@ -139,7 +142,6 @@ function getWeatherIcon(item: any) {
   .city {
     font-size: 30px;
 }
-
   .heart {
     font-size: 20px;
     padding: 12px;

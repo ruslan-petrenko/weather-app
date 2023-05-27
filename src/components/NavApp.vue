@@ -4,7 +4,8 @@ import { ref, watchEffect } from 'vue';
 import { useStore } from 'vuex';
 import AutocompleateApp from '@/components/AutocompleateApp.vue';
 const props = defineProps<{
-  showSideBar: boolean
+  showSideBar: boolean,
+  routers: [{path: string, name: string}]
 }>()
 
 const emit = defineEmits(['toggleSideBar'])
@@ -37,8 +38,8 @@ function handleInput(value: string) {
       </div>
       
       <div class="links">
-        <RouterLink class="link" to="/">Home</RouterLink>
-        <RouterLink class="link" to="/favorites">Favorites</RouterLink>
+        <RouterLink class="link" v-for="(router, index) of props.routers" :key="index" :to="router.path">
+          {{ router.name }}</RouterLink>
       </div>
       <div
           class="burger-btn-wrapp"

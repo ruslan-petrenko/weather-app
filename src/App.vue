@@ -4,17 +4,24 @@ import { ref } from 'vue';
 import NavApp from './components/NavApp.vue'
 import SidebarApp from './components/SidebarApp.vue'
 
-let buttonIsOpen = ref(false)
+let isOpen = ref(false)
 
+const routers = [{path: '/', name: 'Home'}, {path: '/favorites', name: 'Favorites'}]
 function toggleSideBar() {
-  buttonIsOpen.value = !buttonIsOpen.value
+  isOpen.value = !isOpen.value
 }
+
+function hideSidebar() {
+  isOpen.value = !isOpen.value
+}
+
+
 </script>
 
 <template>
   <header>
-    <NavApp @toggleSideBar="toggleSideBar" :showSideBar="buttonIsOpen" /> 
-    <SidebarApp :open="buttonIsOpen"/>
+    <NavApp :routers="routers" @toggleSideBar="toggleSideBar" :showSideBar="isOpen" /> 
+    <SidebarApp :routers="routers" :open="isOpen" @hideSidebar="hideSidebar"/>
   </header>
   <main> 
     <RouterView />
