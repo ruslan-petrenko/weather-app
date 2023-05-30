@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { computed} from 'vue';
+import { computed, onMounted, watchEffect } from 'vue';
 import {ref} from 'vue'
 import { useStore } from 'vuex'
 import { formatDate } from '@/services/helpers';
 import ButtonGroup from './ButtonGroup.vue';
+const props = defineProps<{
+  localWeatherData: any
+}>()
 
 const store = useStore()
 
@@ -13,28 +16,40 @@ const whetherRangeList: any = [
   { value: 'fiveDays', label: '5 Days' }
 ]
 
-let isFavorite = ref(true);
-const weatherData = computed(() => store.state.weatherData)
+const isFavorite = ref(false)  
+const storeWeatherData = computed(() => store.state.weatherData)
+const currentCityName = computed(() => props.localWeatherData ? props.localWeatherData.city.name : storeWeatherData.value.city.name)
+let storedCities: any = [];
 
 function handleSelectTimeRange(timeRenge: object) {
   store.commit('setTimeRange', timeRenge)
-  store.dispatch('getTodayWeatherData', store.getters.currentTimeStemp)
+  store.dispatch('getWeatherData', store.getters.currentTimeStemp)
 }
 
-function changeHeart() {
-  isFavorite.value = !isFavorite.value
+function storeFavoriteCity() {
+
+  if (isFavorite.value) {
+    storedCities = storedCities.filter((city : string) => city != currentCityName.value);
+    localStorage.setItem('cities', JSON.stringify(storedCities));
+    isFavorite.value = false;
+  } else {
+    storedCities.push(currentCityName.value);
+    localStorage.setItem('cities', JSON.stringify(storedCities));
+    isFavorite.value = true;
+  }
 }
 
 const weatherList = computed(() => {
+  const data = props.localWeatherData ? props.localWeatherData : storeWeatherData.value
   if (store.state.selectedTimeRange === 'today' ) {
-    const endOfTheDayIndex = weatherData.value?.list?.findIndex((el: any) => formatDate(el.dt_txt) === '12 AM')
-    return weatherData.value.list?.filter((el: any, i: number) => i <= endOfTheDayIndex)
+    const endOfTheDayIndex = data.list?.findIndex((el: any) => formatDate(el.dt_txt) === '12 AM')
+    return data.list?.filter((el: any, i: number) => i <= endOfTheDayIndex)
   }
 
   if (store.state.selectedTimeRange === 'tomorrow' ) {
     return []
   }
-  return weatherData.value.list
+  return data.list
 })
 
 function getWeatherIcon(item: any) {
@@ -58,6 +73,16 @@ function getWeatherIcon(item: any) {
 
   return 'cloud'
 }
+
+watchEffect(() => {
+  isFavorite.value = storedCities.find((c: string) => c === currentCityName.value )
+})
+
+onMounted(() => {
+  storedCities = JSON.parse(localStorage.getItem('cities') as any) || [];
+  isFavorite.value = storedCities.find((c: string) => c === currentCityName.value)
+
+})
 </script>
 
 <template>
@@ -69,10 +94,10 @@ function getWeatherIcon(item: any) {
         :selectedOption="store.state.selectedTimeRange" 
         @select="handleSelectTimeRange"/>
       </div>
-      <font-awesome-icon class="heart" :icon="[isFavorite ? 'far' : 'fas', 'heart']" @click="changeHeart"/>
+      <font-awesome-icon class="heart" :icon="[isFavorite ? 'fas' : 'far', 'heart']" @click="storeFavoriteCity"/>
     </div>
     <div>
-      <p class="city">{{ weatherData.city?.name }}</p>
+      <p class="city">{{ currentCityName }}</p>
     </div>
     <div class="card-wrapp">
       <div v-for="(item, index) of weatherList" :key="index">

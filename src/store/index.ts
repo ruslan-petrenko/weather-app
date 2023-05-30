@@ -8,7 +8,7 @@ const store = createStore({
   state () {
     return {
       weatherData: [],
-      cityesData: data,
+      citiesData: data,
       selectedCity: null,
       selectedTimeRange: { value: 'today', label: 'Today' }, 
     }
@@ -48,7 +48,7 @@ const store = createStore({
   },
 
   actions: {
-    async getTodayWeatherData({ commit, state }: any, counts: number | undefined) {
+    async getWeatherData({ commit, state }: any, counts: number | undefined) {
       
       await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${state.selectedCity.lat}&lon=${state.selectedCity.lng}&appid=${APIKEY}${counts ? '&cnt=' + counts : ''}&units=metric`)
       .then(response => {

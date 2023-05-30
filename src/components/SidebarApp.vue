@@ -20,6 +20,7 @@ const emit = defineEmits(['hideSidebar'])
 
 <style scoped>
 .sidebar {
+  z-index: 2;
   position: fixed;
   top: 82px;
   background: white;

@@ -1,5 +1,6 @@
 :root {
   --purple-500: #8660ae;
+  --purple-600: rgba(105, 78, 214, 1);
   --purple-700: rgba(105, 78, 214, 0.08);
   --text-color: #694ED6;
   --black-800: rgba(0, 0, 0, 1);

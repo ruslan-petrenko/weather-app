@@ -15,10 +15,10 @@ const search = ref('Truskavets');
 
 
 watchEffect(async () => {
-  const city = store.state.cityesData.find((el: any) => el.city === search.value)
+  const city = store.state.citiesData.find((el: any) => el.city === search.value)
   if (city) {
     store.commit('setCity', city)
-    await store.dispatch('getTodayWeatherData', store.getters.currentTimeStemp);
+    await store.dispatch('getWeatherData', store.getters.currentTimeStemp);
   }
 })
 
@@ -34,7 +34,7 @@ function handleInput(value: string) {
         <a href="/"><img src="./icons/Logo.png" alt="Logo"/></a>
         <AutocompleateApp 
         :value="search" 
-        :data="store.state.cityesData" searchByProp="city" @input="handleInput" placeholder="Find city"/>
+        :data="store.state.citiesData" searchByProp="city" @input="handleInput" placeholder="Find city"/>
       </div>
       
       <div class="links">

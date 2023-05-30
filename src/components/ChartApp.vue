@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { onMounted, watchEffect } from 'vue';
+import { onMounted, watchEffect, ref } from 'vue';
 import Chart from 'chart.js/auto';
 
 const props = defineProps<{
   data: any[]
 }>()
-
+const chartRef = ref(null);
 let chart: any = null
 
 watchEffect(() => {
@@ -31,7 +31,7 @@ watchEffect(() => {
 
 onMounted(() => {
   chart = new Chart(
-    document.querySelector('.chart') as any,
+    chartRef.value,
     {
       type: 'line',
       data: {
@@ -58,7 +58,7 @@ onMounted(() => {
 <template>
   <div  class="chart-wrapp">
     <div>
-      <canvas class="chart"></canvas>
+      <canvas ref="chartRef" class="chart"></canvas>
     </div>
   </div>
   
