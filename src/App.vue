@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
-import { ref } from 'vue';
+import { RouterView, useRoute } from 'vue-router'
+import { computed,ref } from 'vue';
 import NavApp from './components/NavApp.vue'
 import SidebarApp from './components/SidebarApp.vue'
 
 let isOpen = ref(false)
+
+const route = useRoute();
+const path = computed(() =>route.path)
 
 const routers = [{path: '/', name: 'Home'}, {path: '/favorites', name: 'Favorites'}]
 function toggleSideBar() {
@@ -20,7 +23,7 @@ function hideSidebar() {
 
 <template>
   <header>
-    <NavApp :routers="routers" @toggleSideBar="toggleSideBar" :showSideBar="isOpen" /> 
+    <NavApp :current-page="path" :routers="routers" @toggleSideBar="toggleSideBar" :showSideBar="isOpen" /> 
     <SidebarApp :routers="routers" :open="isOpen" @hideSidebar="hideSidebar"/>
   </header>
   <main> 

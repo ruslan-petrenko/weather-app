@@ -5,7 +5,8 @@ import { useStore } from 'vuex'
 import { formatDate } from '@/services/helpers';
 import ButtonGroup from './ButtonGroup.vue';
 const props = defineProps<{
-  localWeatherData: any
+  localWeatherData: any,
+  currentPage: string,
 }>()
 
 const store = useStore()
@@ -23,20 +24,25 @@ let storedCities: any = [];
 
 function handleSelectTimeRange(timeRenge: object) {
   store.commit('setTimeRange', timeRenge)
-  store.dispatch('getWeatherData', store.getters.currentTimeStemp)
 }
 
 function storeFavoriteCity() {
-
   if (isFavorite.value) {
     storedCities = storedCities.filter((city : string) => city != currentCityName.value);
     localStorage.setItem('cities', JSON.stringify(storedCities));
     isFavorite.value = false;
   } else {
-    storedCities.push(currentCityName.value);
-    localStorage.setItem('cities', JSON.stringify(storedCities));
-    isFavorite.value = true;
+    if (storedCities.length < 5) {
+      storedCities.push(currentCityName.value);
+      localStorage.setItem('cities', JSON.stringify(storedCities));
+      isFavorite.value = true;
+    } else {
+      alert('Array is full')
+    }
+    
   }
+  console.log('local ', props.localWeatherData.city.coord)
+
 }
 
 const weatherList = computed(() => {
@@ -75,30 +81,38 @@ function getWeatherIcon(item: any) {
 }
 
 watchEffect(() => {
-  isFavorite.value = storedCities.find((c: string) => c === currentCityName.value )
+  // isFavorite.value = storedCities.find((c: string) => c === currentCityName.value)
+  isFavorite.value = storedCities.includes(currentCityName.value)
+
 })
 
 onMounted(() => {
   storedCities = JSON.parse(localStorage.getItem('cities') as any) || [];
-  isFavorite.value = storedCities.find((c: string) => c === currentCityName.value)
-
+  // isFavorite.value = storedCities.find((c: string) => c === currentCityName.value)
+  isFavorite.value = storedCities.includes(currentCityName.value)
 })
 </script>
 
 <template>
   <div class="weather-wrapp">
-    <div class="button-wrapp">
+    <div class="button-wrapp" :class="props.currentPage == '/favorites' ? 'hide-block' : ''">
       <div>
         <ButtonGroup 
         :options="whetherRangeList" 
         :selectedOption="store.state.selectedTimeRange" 
+        type="secondary"
         @select="handleSelectTimeRange"/>
       </div>
       <font-awesome-icon class="heart" :icon="[isFavorite ? 'fas' : 'far', 'heart']" @click="storeFavoriteCity"/>
     </div>
-    <div>
+
+
+    <div class="city-wrapp">
       <p class="city">{{ currentCityName }}</p>
+      <font-awesome-icon v-if="props.currentPage === '/favorites'" class="heart" :icon="[isFavorite ? 'fas' : 'far', 'heart']" @click="storeFavoriteCity"/>
     </div>
+
+    
     <div class="card-wrapp">
       <div v-for="(item, index) of weatherList" :key="index">
         <div class="card">
@@ -132,6 +146,10 @@ onMounted(() => {
   justify-content: space-between;
 }
 
+.hide-block {
+  display: none;
+}
+
 .card-wrapp {
   display: flex;
   overflow-x: scroll;
@@ -150,6 +168,12 @@ onMounted(() => {
   justify-content: space-between;
   font-size: 20px;
   background-color: white;
+}
+
+.city-wrapp {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .city {
   font-size: 45px;

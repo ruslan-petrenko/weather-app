@@ -1,30 +1,52 @@
 <script setup lang="ts">
+import axios from 'axios';
 import { RouterLink } from 'vue-router';
-import { ref, watchEffect } from 'vue';
+import {getCitiesData} from  '../services/api'
+import { ref, watchEffect, onMounted, reactive } from 'vue';
 import { useStore } from 'vuex';
 import AutocompleateApp from '@/components/AutocompleateApp.vue';
 const props = defineProps<{
   showSideBar: boolean,
-  routers: {path: string, name: string}[]
+  routers: {path: string, name: string}[],
+  currentPage: string,
 }>()
 
 const emit = defineEmits(['toggleSideBar'])
 
 const store = useStore();
 const search = ref('Truskavets');
+const debounce = createDebounce()
 
+const data = reactive({ cities: []})
 
 watchEffect(async () => {
-  const city = store.state.citiesData.find((el: any) => el.city === search.value)
+  const city = data.cities.find((el: any) => el.city === search.value)
   if (city) {
     store.commit('setCity', city)
-    await store.dispatch('getWeatherData', store.getters.currentTimeStemp);
   }
 })
 
 function handleInput(value: string) {
   search.value = value;
+  debounce(getData, 500)
 }
+function createDebounce() {
+    let timeout: any = null;
+    return function (cb: any, delayMs: any, ...args: any) {
+      clearTimeout(timeout);
+      timeout = setTimeout(async() => {
+        await cb(...args);
+      }, delayMs);
+    };
+  }
+
+  async function  getData() {
+    data.cities = await getCitiesData(search.value).then(response => response.data)
+  }
+
+onMounted(async () => {
+  await getData()
+})
 </script>
 
 <template>
@@ -32,9 +54,9 @@ function handleInput(value: string) {
     <div class="nav-content">
       <div class="finder-wrapp">
         <a href="/"><img src="./icons/Logo.png" alt="Logo"/></a>
-        <AutocompleateApp 
+        <AutocompleateApp v-if="props.currentPage === '/'"
         :value="search" 
-        :data="store.state.citiesData" searchByProp="city" @input="handleInput" placeholder="Find city"/>
+        :data="data.cities" searchByProp="city" @input="handleInput" placeholder="Find city"/>
       </div>
       
       <div class="links">

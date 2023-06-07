@@ -1,17 +1,56 @@
 <script setup lang="ts">
 import WeatherCard from '@/components/WeatherCard.vue';
+import ButtonGroup from '@/components/ButtonGroup.vue';
+import {getCitiesData} from  '../services/api'
+import { useStore } from 'vuex'
 import {Swiper, SwiperSlide} from 'swiper/vue'
 import 'swiper/css'
-import { onMounted } from 'vue';
+import { onMounted, reactive } from 'vue';
 
-let favoriteCities: any = [];
+const store = useStore()
 
-onMounted(() => {
-  favoriteCities = JSON.parse(localStorage.getItem('cities')) || [];
+let dataFavCities: any = reactive({ favoriteCities: []});
+// let data = reactive({cities: []})
+
+const whetherRangeList: any = [
+  { value: 'today', label: 'Today' },
+  { value: 'tomorrow', label: 'Tomorrow' }, 
+  { value: 'fiveDays', label: '5 Days' }
+]
+
+function handleSelectTimeRange(timeRenge: object) {
+  store.commit('setTimeRange', timeRenge)
+}
+
+function init() {
+  const storedCities = JSON.parse(localStorage.getItem('cities')) || [];
+  dataFavCities.favoriteCities = storedCities.map((cityName: string) => {
+    const city = dataFavCities.favoriteCities.find(el => el.city === cityName)
+    if (city) {
+      return city
+    }
+    return null
+  })
+}
+
+// async function  getData() {
+//     data.cities = await getCitiesData(city).then(response => response.data)
+//   }
+
+onMounted(async () => {
+  init()
+  // await getData()
 })
 </script>
 
 <template>
+  <div class="button-group-wrapp">
+    <ButtonGroup
+        :options="whetherRangeList" 
+        :selectedOption="store.state.selectedTimeRange" 
+        type="primary"
+        @select="handleSelectTimeRange"/>
+  </div>
   <swiper
     :slidesPerView="'auto'"
     :centeredSlides="true"
@@ -21,8 +60,8 @@ onMounted(() => {
     }"
     class="mySwiper"
   >
-    <swiper-slide v-for="(city, index) of favoriteCities" class="slides" :key="index">
-      <WeatherCard :city="city"/>
+    <swiper-slide v-for="(city, index) of dataFavCities.favoriteCities" class="slides" :key="index">
+      <WeatherCard v-if="city" :city="city"/>
     </swiper-slide>
   </swiper>
 </template>
@@ -30,5 +69,11 @@ onMounted(() => {
 <style scoped>
 .slides {
   max-width: 1000px;
+}
+
+.button-group-wrapp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
