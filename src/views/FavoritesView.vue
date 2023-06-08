@@ -2,14 +2,13 @@
 import WeatherCard from '@/components/WeatherCard.vue';
 import ButtonGroup from '@/components/ButtonGroup.vue';
 import { useStore } from 'vuex'
+import { onMounted, reactive } from 'vue';
 import {Swiper, SwiperSlide} from 'swiper/vue'
 import 'swiper/css'
-import { onMounted, reactive, watchEffect } from 'vue';
 
 const store = useStore()
 
-let dataFavCities: any = reactive({ favoriteCities: []});
-// let data = reactive({cities: []})
+const dataFavCities: any = reactive({ favoriteCities: []});
 
 const whetherRangeList: any = [
   { value: 'today', label: 'Today' },
