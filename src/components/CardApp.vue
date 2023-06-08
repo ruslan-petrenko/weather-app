@@ -28,12 +28,12 @@ function handleSelectTimeRange(timeRenge: object) {
 
 function storeFavoriteCity() {
   if (isFavorite.value) {
-    storedCities = storedCities.filter((city : string) => city != currentCityName.value);
+    storedCities = storedCities.filter((obj : string) => obj.city != currentCityName.value);
     localStorage.setItem('cities', JSON.stringify(storedCities));
     isFavorite.value = false;
   } else {
     if (storedCities.length < 5) {
-      storedCities.push(currentCityName.value);
+      storedCities.push({city: props.localWeatherData.city.name, latitude: props.localWeatherData.city.coord.lat, longitude: props.localWeatherData.city.coord.lon});
       localStorage.setItem('cities', JSON.stringify(storedCities));
       isFavorite.value = true;
     } else {
@@ -41,7 +41,7 @@ function storeFavoriteCity() {
     }
     
   }
-  console.log('local ', props.localWeatherData.city.coord)
+  console.log('city ', currentCityName.value, )
 
 }
 
@@ -81,15 +81,13 @@ function getWeatherIcon(item: any) {
 }
 
 watchEffect(() => {
-  // isFavorite.value = storedCities.find((c: string) => c === currentCityName.value)
-  isFavorite.value = storedCities.includes(currentCityName.value)
-
+  storedCities = JSON.parse(localStorage.getItem('cities') as any) || [];
+  isFavorite.value = storedCities.find((obj: any) => obj.city === currentCityName.value)     
 })
 
 onMounted(() => {
   storedCities = JSON.parse(localStorage.getItem('cities') as any) || [];
-  // isFavorite.value = storedCities.find((c: string) => c === currentCityName.value)
-  isFavorite.value = storedCities.includes(currentCityName.value)
+  isFavorite.value = storedCities.find((obj: any) => obj.city === currentCityName.value)   
 })
 </script>
 

@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import WeatherCard from '@/components/WeatherCard.vue';
 import ButtonGroup from '@/components/ButtonGroup.vue';
-import {getCitiesData} from  '../services/api'
 import { useStore } from 'vuex'
 import {Swiper, SwiperSlide} from 'swiper/vue'
 import 'swiper/css'
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, watchEffect } from 'vue';
 
 const store = useStore()
 
@@ -24,23 +23,15 @@ function handleSelectTimeRange(timeRenge: object) {
 
 function init() {
   const storedCities = JSON.parse(localStorage.getItem('cities')) || [];
-  dataFavCities.favoriteCities = storedCities.map((cityName: string) => {
-    const city = dataFavCities.favoriteCities.find(el => el.city === cityName)
+  dataFavCities.favoriteCities = storedCities.map((cityData: object) => {
+    const city = storedCities.find((el: object) => el.city === cityData.city)
     if (city) {
       return city
     }
     return null
   })
 }
-
-// async function  getData() {
-//     data.cities = await getCitiesData(city).then(response => response.data)
-//   }
-
-onMounted(async () => {
-  init()
-  // await getData()
-})
+onMounted(async () => {init()})
 </script>
 
 <template>
