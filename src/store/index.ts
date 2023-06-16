@@ -1,10 +1,8 @@
 import { createStore } from 'vuex'
-import data from '@/assets/ua.json';
 
 const store = createStore({
   state () {
     return {
-      citiesData: data,
       selectedCity: null,
       selectedTimeRange: { value: 'today', label: 'Today' }, 
     }

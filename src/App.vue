@@ -3,6 +3,7 @@ import { RouterView, useRoute } from 'vue-router'
 import { computed,ref } from 'vue';
 import NavApp from './components/NavApp.vue'
 import SidebarApp from './components/SidebarApp.vue'
+import ModalApp from './components/ModalApp.vue'
 
 let isOpen = ref(false)
 
@@ -17,8 +18,6 @@ function toggleSideBar() {
 function hideSidebar() {
   isOpen.value = !isOpen.value
 }
-
-
 </script>
 
 <template>

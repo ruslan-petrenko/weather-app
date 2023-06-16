@@ -8,6 +8,8 @@ import 'swiper/css'
 
 const store = useStore()
 
+
+
 const dataFavCities: any = reactive({ favoriteCities: []});
 
 const whetherRangeList: any = [
@@ -54,11 +56,16 @@ onMounted(async () => {init()})
       <WeatherCard v-if="city" :city="city"/>
     </swiper-slide>
   </swiper>
+
 </template>
 
 <style scoped>
 .slides {
   max-width: 1000px;
+}
+
+.mySwiper {
+  padding: 38px 0;
 }
 
 .button-group-wrapp {
